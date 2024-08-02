@@ -1,6 +1,6 @@
 # Run `make up-reqs` to update pinned dependencies in requirement text files
 
-flake8==3.8.4 # flake8 latest version
+flake8
 pre-commit
 invoke
 twine

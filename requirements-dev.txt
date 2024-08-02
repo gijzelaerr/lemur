@@ -18,7 +18,7 @@ docutils==0.20.1
     # via readme-renderer
 filelock==3.15.4
     # via virtualenv
-flake8==3.8.4
+flake8==7.1.0
     # via -r requirements-dev.in
 identify==2.6.0
     # via pre-commit
@@ -42,7 +42,7 @@ keyring==25.2.1
     # via twine
 markdown-it-py==3.0.0
     # via rich
-mccabe==0.6.1
+mccabe==0.7.0
     # via flake8
 mdurl==0.1.2
     # via markdown-it-py
@@ -62,9 +62,9 @@ platformdirs==4.2.2
     # via virtualenv
 pre-commit==3.5.0
     # via -r requirements-dev.in
-pycodestyle==2.6.0
+pycodestyle==2.12.0
     # via flake8
-pyflakes==2.2.0
+pyflakes==3.2.0
     # via flake8
 pygments==2.18.0
     # via

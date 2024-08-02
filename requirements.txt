@@ -166,16 +166,18 @@ markupsafe==2.1.5
     #   jinja2
     #   mako
     #   werkzeug
-marshmallow==2.20.4
+marshmallow==3.21.3
     # via
     #   -r requirements.in
     #   marshmallow-sqlalchemy
-marshmallow-sqlalchemy==0.23.1
+marshmallow-sqlalchemy==1.0.0
     # via -r requirements.in
 ndg-httpsclient==0.5.1
     # via -r requirements.in
 packaging==24.1
-    # via gunicorn
+    # via
+    #   gunicorn
+    #   marshmallow
 paramiko==3.4.0
     # via -r requirements.in
 pem==23.1.0

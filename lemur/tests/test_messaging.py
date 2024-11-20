@@ -8,7 +8,7 @@ from moto import mock_aws
 from lemur.tests.factories import AuthorityFactory, CertificateFactory, EndpointFactory
 
 
-@mock_aws("ses")
+@mock_aws
 def verify_sender_email():
     ses_client = boto3.client("ses", region_name="us-east-1")
     ses_client.verify_email_identity(EmailAddress="lemur@example.com")
@@ -83,7 +83,7 @@ def test_get_eligible_certificates(app, certificate, notification):
         }
 
 
-@mock_aws("ses")
+@mock_aws
 def test_send_expiration_notification(certificate, notification, notification_plugin):
     from lemur.notifications.messaging import send_expiration_notifications
     verify_sender_email()
@@ -101,7 +101,7 @@ def test_send_expiration_notification(certificate, notification, notification_pl
         assert send_expiration_notifications([]) == (3, 0)
 
 
-@mock_aws("ses")
+@mock_aws
 def test_send_expiration_notification_with_no_notifications(
     certificate, notification, notification_plugin
 ):
@@ -112,7 +112,7 @@ def test_send_expiration_notification_with_no_notifications(
         assert send_expiration_notifications([]) == (0, 0)
 
 
-@mock_aws("ses")
+@mock_aws
 def test_send_expiration_summary_notification(certificate, notification, notification_plugin):
     from lemur.notifications.messaging import send_security_expiration_summary
     verify_sender_email()
@@ -134,7 +134,7 @@ def test_send_expiration_summary_notification(certificate, notification, notific
     assert send_security_expiration_summary([])
 
 
-@mock_aws("ses")
+@mock_aws
 def test_send_rotation_notification(notification_plugin, certificate):
     from lemur.notifications.messaging import send_rotation_notification
     verify_sender_email()
@@ -142,7 +142,7 @@ def test_send_rotation_notification(notification_plugin, certificate):
     assert send_rotation_notification(certificate)
 
 
-@mock_aws("ses")
+@mock_aws
 def test_send_pending_failure_notification(notification_plugin, async_issuer_plugin, pending_certificate):
     from lemur.notifications.messaging import send_pending_failure_notification
     verify_sender_email()
@@ -164,7 +164,7 @@ def test_get_authority_certificates():
     assert set(get_expiring_authority_certificates()) == {certificate_1, certificate_2}
 
 
-@mock_aws("ses")
+@mock_aws
 def test_send_authority_expiration_notifications():
     from lemur.notifications.messaging import send_authority_expiration_notifications
     verify_sender_email()

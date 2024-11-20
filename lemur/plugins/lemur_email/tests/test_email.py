@@ -2,7 +2,7 @@ import os
 from datetime import timedelta
 
 import arrow
-from moto import mock_ses
+from moto import mock_aws
 
 from lemur.certificates.schemas import certificate_notification_output_schema
 from lemur.plugins.lemur_email.plugin import render_html
@@ -37,7 +37,7 @@ def test_render_rotation_failure(pending_certificate):
     assert render_html("failed", get_options(), certificate_notification_output_schema.dump(pending_certificate).data)
 
 
-@mock_ses
+@mock_aws
 def test_send_expiration_notification():
     from lemur.notifications.messaging import send_expiration_notifications
     from lemur.tests.factories import CertificateFactory
@@ -56,7 +56,7 @@ def test_send_expiration_notification():
     assert send_expiration_notifications([]) == (4, 0)  # owner (1), recipients (2), and security (1)
 
 
-@mock_ses
+@mock_aws
 def test_send_rotation_notification(endpoint, source_plugin):
     from lemur.notifications.messaging import send_rotation_notification
     from lemur.deployment.service import rotate_certificate
@@ -69,7 +69,7 @@ def test_send_rotation_notification(endpoint, source_plugin):
     assert send_rotation_notification(new_certificate)
 
 
-@mock_ses
+@mock_aws
 def test_send_pending_failure_notification(user, pending_certificate, async_issuer_plugin):
     from lemur.notifications.messaging import send_pending_failure_notification
 

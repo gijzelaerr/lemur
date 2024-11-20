@@ -1,5 +1,5 @@
 import boto3
-from moto import mock_sts, mock_s3
+from moto import mock_aws
 
 
 def test_get_certificates(app):
@@ -9,8 +9,7 @@ def test_get_certificates(app):
     assert p
 
 
-@mock_sts()
-@mock_s3()
+@mock_aws
 def test_upload_acme_token(app):
     from lemur.plugins.base import plugins
     from lemur.plugins.lemur_aws.s3 import get

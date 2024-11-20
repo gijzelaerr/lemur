@@ -1,6 +1,6 @@
 # Run `make up-reqs` to update pinned dependencies in requirement text files
 
-acme
+acme<2.0.0
 alembic-autogenerate-enums
 arrow
 asyncpool
@@ -9,7 +9,7 @@ botocore
 celery[redis]
 certifi
 certsrv
-CloudFlare
+cloudflare<2.9
 cryptography
 dnspython3
 dyn

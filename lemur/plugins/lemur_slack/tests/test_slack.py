@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 import arrow
-from moto import mock_ses
+from moto import mock_aws
 
 from lemur.tests.factories import NotificationFactory, CertificateFactory
 from lemur.tests.test_messaging import verify_sender_email
@@ -40,7 +40,7 @@ def get_options():
     ]
 
 
-@mock_ses()  # because email notifications are also sent
+@mock_aws  # because email notifications are also sent
 def test_send_expiration_notification():
     from lemur.notifications.messaging import send_expiration_notifications
 

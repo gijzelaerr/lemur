@@ -1,9 +1,8 @@
 import boto3
-from moto import mock_sts, mock_ec2, mock_elb, mock_elbv2, mock_iam
+from moto import mock_aws
 
 
-@mock_sts()
-@mock_elb()
+@mock_aws
 def test_get_all_elbs(app, aws_credentials):
     from lemur.plugins.lemur_aws.elb import get_all_elbs
 
@@ -29,10 +28,7 @@ def test_get_all_elbs(app, aws_credentials):
     assert elbs
 
 
-@mock_sts()
-@mock_ec2
-@mock_elbv2()
-@mock_iam
+@mock_aws
 def test_create_elb_with_https_listener_miscellaneous(app, aws_credentials):
     from lemur.plugins.lemur_aws import iam, elb
     endpoint_name = "example-lbv2"
@@ -98,8 +94,7 @@ def test_create_elb_with_https_listener_miscellaneous(app, aws_credentials):
     )
 
 
-@mock_sts()
-@mock_elb()
+@mock_aws
 def test_get_all_elbs_v2():
     from lemur.plugins.lemur_aws.elb import get_all_elbs_v2
 

@@ -12,7 +12,7 @@ from lemur.tests.factories import NotificationFactory, CertificateFactory
 from lemur.tests.test_messaging import verify_sender_email
 
 
-@mock_aws("sns")
+@mock_aws
 def test_format(certificate, endpoint):
     data = [certificate_notification_output_schema.dump(certificate).data]
 
@@ -28,8 +28,7 @@ def test_format(certificate, endpoint):
         assert expected_message == json.loads(format_message(certificate, "expiration"))
 
 
-@mock_aws("sns")
-@mock_aws("sqs")
+@mock_aws
 def create_and_subscribe_to_topic():
     sns_client = boto3.client("sns", region_name="us-east-1")
     topic_arn = sns_client.create_topic(Name='lemursnstest')["TopicArn"]
@@ -43,8 +42,7 @@ def create_and_subscribe_to_topic():
     return [topic_arn, sqs_client, queue_url]
 
 
-@mock_aws("sns")
-@mock_aws("sqs")
+@mock_aws
 def test_publish(certificate, endpoint):
     data = [certificate_notification_output_schema.dump(certificate).data]
 
@@ -73,9 +71,7 @@ def get_options():
     ]
 
 
-@mock_aws("sns")
-@mock_aws("sqs")
-@mock_ses()  # because email notifications are also sent
+@mock_aws  # because email notifications are also sent
 def test_send_expiration_notification():
     from lemur.notifications.messaging import send_expiration_notifications
 

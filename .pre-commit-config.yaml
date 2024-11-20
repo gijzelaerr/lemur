@@ -12,7 +12,7 @@
     rev: stable
     hooks:
     - id: black
-      language_version: python3.7
+      language_version: python3.12
 
 -   repo: local
     hooks:

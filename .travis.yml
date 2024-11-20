@@ -9,8 +9,8 @@ addons:
 
 matrix:
   include:
-    - python: "3.7"
-      env: TOXENV=py37
+    - python: "3.12"
+      env: TOXENV=py312
 
 cache:
   directories:

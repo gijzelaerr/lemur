@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
-  minifycss = require('gulp-minify-css'),
+  minifycss = require('gulp-clean-css'),
   concat = require('gulp-concat'),
   less = require('gulp-less'),
   gulpif = require('gulp-if'),

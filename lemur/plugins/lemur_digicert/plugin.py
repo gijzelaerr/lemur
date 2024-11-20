@@ -268,7 +268,7 @@ def get_order_id(session, base_url, digicert_cert_id):
     orders = response_data["orders"]
     if len(orders) != 1:
         raise ValueError(f"Got {len(orders)} orders but expected one.")
-    
+
     return response_data["orders"][0]["id"]
 
 
@@ -378,9 +378,11 @@ class DigiCertIssuerPlugin(IssuerPlugin):
                     old_order_id = get_order_id(session=self.session, base_url=base_url, digicert_cert_id=old_cert_id)
                     data["renewal_of_order_id"] = old_order_id
                 except Exception:
-                    current_app.logger.warning(f"Exception when trying to get the id of the old order that replaces this one.")
+                    current_app.logger.warning(
+                        "Exception when trying to get the id of the old order that replaces this one.")
             else:
-                 current_app.logger.info("The replaced certificates did not have external_id - will not mark order as renewed")
+                current_app.logger.info(
+                    "The replaced certificates did not have external_id - will not mark order as renewed")
 
         # make certificate request
         response = self.session.post(determinator_url, data=json.dumps(data))

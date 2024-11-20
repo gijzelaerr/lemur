@@ -103,7 +103,6 @@ def test_sync_certificates_same_cert_same_name(user, source, sync_source_plugin)
 
 def test_sync_certificates_different_cert_existing_name(user, source, sync_source_plugin):
     from lemur.sources.service import sync_certificates, certificate_create
-    from lemur.certificates import service as cert_service
     from lemur.plugins.base import plugins
 
     # create an existing cert with same body

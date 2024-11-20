@@ -20,7 +20,6 @@ from lemur.destinations import service as destination_service
 
 from lemur.certificates.schemas import CertificateUploadInputSchema
 from lemur.common.utils import find_matching_certificates_by_hash, parse_certificate
-from lemur.common.defaults import serial
 
 from lemur.plugins.base import plugins
 from lemur.plugins.utils import get_plugin_option, set_plugin_option

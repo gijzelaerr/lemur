@@ -258,7 +258,7 @@ class UserFactory(BaseFactory):
     email = Sequence(lambda n: "user{0}@example.com".format(n))
     active = True
     password = FuzzyText(length=24)
-    certificates = []
+    certificates_ = []
 
     class Meta:
         """Factory Configuration."""
@@ -281,7 +281,7 @@ class UserFactory(BaseFactory):
 
         if extracted:
             for cert in extracted:
-                self.certificates.append(cert)
+                self.certificates_.append(cert)
 
     @post_generation
     def authorities(self, create, extracted, **kwargs):

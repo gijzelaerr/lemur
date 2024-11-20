@@ -12,7 +12,6 @@ import sys
 import time
 import logging
 import arrow
-from collections import defaultdict
 from celery import Celery, group
 from celery.app.task import Context
 from celery.exceptions import SoftTimeLimitExceeded
@@ -114,7 +113,7 @@ def get_celery_request_tags(**kwargs):
         except AttributeError:
             sender_hostname = vars(sender.request).get("origin", "unknown")
     if request and not isinstance(
-        request, Context
+            request, Context
     ):  # unlike others, task_revoked sends a Context for `request`
         task_name = request.name
         task_id = request.id
@@ -716,7 +715,7 @@ def sync_source_destination():
     return log_data
 
 
-@celery.task(soft_time_limit=3600, autoretry_for=(Exception,), default_retry_delay=10*60, max_retries=6)
+@celery.task(soft_time_limit=3600, autoretry_for=(Exception,), default_retry_delay=10 * 60, max_retries=6)
 def certificate_reissue():
     """
     This celery task reissues certificates which are pending reissue
@@ -777,7 +776,6 @@ def certificate_reissue():
 
 @celery.task(soft_time_limit=3600)
 def certificate_rotate(**kwargs):
-
     """
     This celery task rotates certificates which are reissued but having endpoints attached to the replaced cert
     :return:
@@ -1202,7 +1200,7 @@ def send_notifications(notifications, notification_type, message, **kwargs):
         )
 
 
-@celery.task(bind=True, soft_time_limit=60, autoretry_for=(Exception,), default_retry_delay=10*60, max_retries=6)
+@celery.task(bind=True, soft_time_limit=60, autoretry_for=(Exception,), default_retry_delay=10 * 60, max_retries=6)
 def rotate_endpoint(self, endpoint_id, **kwargs):
     function = f"{__name__}.{sys._getframe().f_code.co_name}"
     logger = logging.getLogger(function)
@@ -1261,13 +1259,14 @@ def rotate_endpoint(self, endpoint_id, **kwargs):
         sync_source.delay(endpoint.source.label)
 
 
-@celery.task(bind=True, soft_time_limit=60, autoretry_for=(Exception,), default_retry_delay=10*60, max_retries=6)
+@celery.task(bind=True, soft_time_limit=60, autoretry_for=(Exception,), default_retry_delay=10 * 60, max_retries=6)
 def rotate_endpoint_remove_cert(self, endpoint_id, certificate_id):
     function = f"{__name__}.{sys._getframe().f_code.co_name}"
     logger = logging.getLogger(function)
 
     if self.request.retries > 0:
-        logger.warning(f"Retrying rotate_endpoint_remove_cert task as it failed before (retry {self.request.retries} of {self.max_retries})")
+        logger.warning(
+            f"Retrying rotate_endpoint_remove_cert task as it failed before (retry {self.request.retries} of {self.max_retries})")
 
     endpoint = endpoint_service.get(endpoint_id)
     certificate = certificate_service.get(certificate_id)
@@ -1278,7 +1277,8 @@ def rotate_endpoint_remove_cert(self, endpoint_id, certificate_id):
         return
 
     if not certificate:
-        logger.warning("Could not detach cert because certificate does not exist - maybe this task was scheduled twice.")
+        logger.warning(
+            "Could not detach cert because certificate does not exist - maybe this task was scheduled twice.")
         return
 
     with red.lock(endpoint.name.rsplit("/", 1)[0], blocking_timeout=10):
@@ -1313,7 +1313,7 @@ def rotate_all_pending_endpoints():
 
         # verify that the certificate has been uploaded before rotating the endpoints
         if not all(
-            [dest.plugin.verify(new_cert.name, dest.options) for dest in new_cert.destinations]
+                [dest.plugin.verify(new_cert.name, dest.options) for dest in new_cert.destinations]
         ):
             logger.warning(
                 "Certificate has not been uploaded to all destinations, skipping rotate"
@@ -1346,7 +1346,6 @@ def rotate_all_pending_endpoints():
     logger.debug(
         f"Scheduling endpoint rotations (start={start}, stop={stop}, step={step})"
     )
-
 
     g = group(rotate_endpoint_tasks).skew(start, stop, step)
     g.apply_async()

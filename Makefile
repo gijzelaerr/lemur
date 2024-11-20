@@ -11,11 +11,11 @@ ifeq ($(USER), root)
 else
 	npm install
 endif
-	pip install "setuptools>=0.9.8"
+	pip install "setuptools"
 	# order matters here, base package must install first
 	pip install -e .
-	pip install "file://`pwd`#egg=lemur[dev]"
-	pip install "file://`pwd`#egg=lemur[tests]"
+	pip install ".[dev]"
+	pip install ".[tests]"
 	node_modules/.bin/gulp build
 	node_modules/.bin/gulp package --urlContextPath=$(urlContextPath)
 	@echo ""
@@ -28,7 +28,7 @@ ifeq ($(USER), root)
 else
 	npm install
 endif
-	pip install "setuptools>=0.9.8"
+	pip install "setuptools"
 	# order matters here, base package must install first
 	pip install -e .
 	node_modules/.bin/gulp build
@@ -86,7 +86,7 @@ test-js:
 
 test-python:
 	@echo "--> Running Python tests"
-	coverage run --source lemur -m py.test
+	pytest
 	@echo ""
 
 lint: lint-python lint-js
@@ -113,8 +113,7 @@ ifndef VIRTUAL_ENV
     $(error Please activate virtualenv first)
 endif
 	@echo "--> Updating Python requirements"
-	pip install --upgrade "pip<24.1"
-	pip install --upgrade pip-tools
+	pip install --upgrade pip pip-tools
 	pip-compile --output-file requirements.txt requirements.in -U --no-emit-index-url
 	pip-compile --output-file requirements-docs.txt requirements-docs.in -U --no-emit-index-url
 	pip-compile --output-file requirements-dev.txt requirements-dev.in -U --no-emit-index-url

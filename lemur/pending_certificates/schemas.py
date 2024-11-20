@@ -43,12 +43,7 @@ class PendingCertificateOutputSchema(LemurOutputSchema):
     resolved_cert_id = fields.Integer(required=False)
 
     rotation = fields.Boolean()
-
-    # Note aliasing is the first step in deprecating these fields.
-    notify = fields.Boolean()
     active = fields.Boolean(attribute="notify")
-
-    cn = fields.String()
     common_name = fields.String(attribute="cn")
 
     owner = fields.Email()

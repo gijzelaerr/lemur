@@ -291,24 +291,16 @@ class CertificateOutputSchema(LemurOutputSchema):
 
     rotation = fields.Boolean()
 
-    # Note aliasing is the first step in deprecating these fields.
-    notify = fields.Boolean()
     active = fields.Boolean(attribute="notify")
     has_private_key = fields.Boolean()
 
-    cn = fields.String()
     common_name = fields.String(attribute="cn")
     distinguished_name = fields.String()
-
-    not_after = fields.DateTime()
     validity_end = ArrowDateTime(attribute="not_after")
-
-    not_before = fields.DateTime()
     validity_start = ArrowDateTime(attribute="not_before")
 
     owner = fields.Email()
     san = fields.Boolean()
-    serial = fields.String()
     serial_hex = Hex(attribute="serial")
     signing_algorithm = fields.String()
     key_type = fields.String(allow_none=True)

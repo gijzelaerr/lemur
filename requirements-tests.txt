@@ -40,7 +40,9 @@ faker==33.0.0
 fakeredis==2.26.1
     # via -r requirements-tests.in
 flask==3.1.0
-    # via pytest-flask
+    # via
+    #   -r requirements-tests.in
+    #   pytest-flask
 freezegun==1.5.1
     # via -r requirements-tests.in
 idna==3.10
@@ -128,7 +130,7 @@ six==1.16.0
     # via python-dateutil
 sortedcontainers==2.4.0
     # via fakeredis
-stevedore==5.3.0
+stevedore==5.4.0
     # via bandit
 typing-extensions==4.12.2
     # via faker

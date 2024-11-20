@@ -56,8 +56,8 @@ class ArrowDateTime(Field):
     }
 
     DATEFORMAT_DESERIALIZATION_FUNCS = {
-        "iso": utils.from_iso,
-        "iso8601": utils.from_iso,
+        "iso": utils.from_rfc,
+        "iso8601": utils.from_rfc,
         "rfc": utils.from_rfc,
         "rfc822": utils.from_rfc,
     }

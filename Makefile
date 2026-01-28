@@ -115,15 +115,13 @@ ifndef VIRTUAL_ENV
     $(error Please activate virtualenv first)
 endif
 	@echo "--> Updating Python requirements"
-	pip install --upgrade pip
-	pip install --upgrade pip-tools
-	pip-compile -v --output-file requirements.txt requirements.in -U --no-emit-index-url --resolver=backtracking
-	pip-compile -v --output-file requirements-tests.txt requirements-tests.in -U --no-emit-index-url --resolver=backtracking
-	pip-compile -v --output-file requirements-dev.txt requirements-dev.in -U --no-emit-index-url --resolver=backtracking
-	pip-compile -v --output-file requirements-docs.txt requirements-docs.in -U --no-emit-index-url --resolver=backtracking
+	uv pip compile -v --output-file requirements.txt requirements.in -U --no-emit-index-url --resolver=backtracking
+	uv pip compile -v --output-file requirements-tests.txt requirements-tests.in -U --no-emit-index-url --resolver=backtracking
+	uv pip compile -v --output-file requirements-dev.txt requirements-dev.in -U --no-emit-index-url --resolver=backtracking
+	uv pip compile -v --output-file requirements-docs.txt requirements-docs.in -U --no-emit-index-url --resolver=backtracking
 	@echo "--> Done updating Python requirements"
 	@echo "--> Installing new dependencies"
-	pip install -e .
+	uv pip install -e .
 	@echo "--> Done installing new dependencies"
 	@echo ""
 
